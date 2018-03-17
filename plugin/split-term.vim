@@ -15,10 +15,10 @@ fun! s:defineMaps()
 
   " Ctrl+[hjkl] to navigate through windows in insert mode
   " " Modifed to use Ctrl instead of Alt in this fork
-  tnoremap <buffer> <C-h> <C-\><C-n><C-w>h
-  tnoremap <buffer> <C-j> <C-\><C-n><C-w>j
-  tnoremap <buffer> <C-k> <C-\><C-n><C-w>k
-  tnoremap <buffer> <C-l> <C-\><C-n><C-w>l
+  " tnoremap <buffer> <C-h> <C-\><C-n><C-w>h
+  " tnoremap <buffer> <C-j> <C-\><C-n><C-w>j
+  " tnoremap <buffer> <C-k> <C-\><C-n><C-w>k
+  " tnoremap <buffer> <C-l> <C-\><C-n><C-w>l
 
   " Ctrl+[hjkl] to navigate through windows in normal mode
   " " Modifed to use Ctrl instead of Alt in this fork
