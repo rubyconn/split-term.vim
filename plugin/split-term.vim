@@ -42,8 +42,8 @@ endfunction
 
 " Opens up a new buffer, either vertical or horizontal. Count can be used to
 " specify the number of visible columns or rows.
-fun! s:openBuffer(count, vertical)
-  let cmd = a:vertical ? 'vnew' : 'new'
+fun! s:openBuffer(count, split_type)
+  let cmd = a:split_type
   let cmd = a:count ? a:count . cmd : cmd
   exe cmd
 endf
@@ -51,9 +51,9 @@ endf
 " Opens a new terminal buffer, but instead of doing so using 'enew' (same
 " window), it uses :vnew and :new instead. Usually, I want to open a new
 " terminal and not replace my current buffer.
-fun! s:openTerm(args, count, vertical)
+fun! s:openTerm(args, count, split_type)
   let params = split(a:args)
-  let direction = s:force_vertical ? 1 : a:vertical
+  let direction = s:force_vertical ? 'vnew' : a:split_type
 
   call s:openBuffer(a:count, direction)
   exe 'terminal' a:args
@@ -63,5 +63,7 @@ fun! s:openTerm(args, count, vertical)
   endif
 endf
 
-command! -count -nargs=* Term call s:openTerm(<q-args>, <count>, 0)
-command! -count -nargs=* VTerm call s:openTerm(<q-args>, <count>, 1)
+command! -count -nargs=* Term call s:openTerm(<q-args>, <count>, 'new')
+command! -count -nargs=* VTerm call s:openTerm(<q-args>, <count>, 'vnew')
+command! -count -nargs=* ETerm call s:openTerm(<q-args>, <count>, 'enew')
+command! -count -nargs=* TTerm call s:openTerm(<q-args>, <count>, 'tabnew')
