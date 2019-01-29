@@ -61,6 +61,8 @@ fun! s:openTerm(args, count, split_type)
   if s:map_keys
     call s:defineMaps()
   endif
+
+  let g:last_split_term = b:terminal_job_id
 endf
 
 command! -count -nargs=* Term call s:openTerm(<q-args>, <count>, 'new')
