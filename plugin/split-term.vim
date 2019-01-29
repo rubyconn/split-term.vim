@@ -51,21 +51,30 @@ endf
 " Opens a new terminal buffer, but instead of doing so using 'enew' (same
 " window), it uses :vnew and :new instead. Usually, I want to open a new
 " terminal and not replace my current buffer.
-fun! s:openTerm(args, count, split_type)
+fun! s:openTerm(args, count, split_type, background)
   let params = split(a:args)
   let direction = s:force_vertical ? 'vnew' : a:split_type
 
   call s:openBuffer(a:count, direction)
+
   exe 'terminal' a:args
-  exe 'startinsert'
+
   if s:map_keys
     call s:defineMaps()
   endif
 
   let g:last_split_term = b:terminal_job_id
+
+  if a:background
+    exe "normal \<C-w>\<C-p>"
+  else
+    exe 'startinsert'
+  endif
 endf
 
-command! -count -nargs=* Term call s:openTerm(<q-args>, <count>, 'new')
-command! -count -nargs=* VTerm call s:openTerm(<q-args>, <count>, 'vnew')
-command! -count -nargs=* ETerm call s:openTerm(<q-args>, <count>, 'enew')
-command! -count -nargs=* TTerm call s:openTerm(<q-args>, <count>, 'tabnew')
+command! -count -nargs=* Term call s:openTerm(<q-args>, <count>, 'new', 0)
+command! -count -nargs=* Termb call s:openTerm(<q-args>, <count>, 'new', 1)
+command! -count -nargs=* VTerm call s:openTerm(<q-args>, <count>, 'vnew', 0)
+command! -count -nargs=* VTermb call s:openTerm(<q-args>, <count>, 'vnew', 1)
+command! -count -nargs=* ETerm call s:openTerm(<q-args>, <count>, 'enew', 0)
+command! -count -nargs=* TTerm call s:openTerm(<q-args>, <count>, 'tabnew', 0)
